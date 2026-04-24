@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #020617;
+    --card: #ffffff;
+    --card-foreground: #020617;
+    --popover: #ffffff;
+    --popover-foreground: #020617;
+    --primary: #FF8F8C; /* Slightly more vibrant coral */
+    --primary-foreground: #ffffff;
+    --secondary: #FDE7E7;
+    --secondary-foreground: #0f172a;
+    --muted: #f8fafc;
+    --muted-foreground: #64748b;
+    --accent: #f1f5f9;
+    --accent-foreground: #0f172a;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #FF8F8C;
+    --radius: 1.5rem;
+  }
+
+  .dark {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --card: #0f172a;
+    --card-foreground: #f8fafc;
+    --popover: #020617;
+    --popover-foreground: #f8fafc;
+    --primary: #FF8F8C;
+    --primary-foreground: #020617;
+    --secondary: #1e293b;
+    --secondary-foreground: #f8fafc;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+    --accent: #1e293b;
+    --accent-foreground: #f8fafc;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #f8fafc;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #FF8F8C;
+  }
+}
+
+@theme {
+  --font-sans: "Inter", "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Inter", "Outfit", ui-sans-serif, system-ui, sans-serif; /* Force serif to sans as well */
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(400px); opacity: 0; }
+  }
+  --animate-scan: scan 3s linear infinite;
+
+  @keyframes cursor-glow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground tracking-tight underline-offset-4 selection:bg-primary/30 font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black tracking-tighter uppercase font-sans;
+  }
+  h1 { @apply text-4xl sm:text-6xl lg:text-7xl leading-[0.85] font-sans; }
+  h2 { @apply text-3xl sm:text-5xl lg:text-6xl leading-[0.9] tracking-tighter font-sans; }
+  h3 { @apply text-xl sm:text-3xl lg:text-4xl leading-tight font-sans; }
+  h4 { @apply text-lg sm:text-xl lg:text-2xl leading-none font-sans; }
+}
+
+.hero-heading {
+  @apply text-4xl sm:text-7xl lg:text-[7rem] xl:text-[8rem] font-black tracking-[-0.04em] uppercase leading-[0.75] font-sans;
+}
+
+.italic-serif {
+  @apply font-sans;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.page-heading {
+  @apply text-3xl sm:text-5xl lg:text-6xl font-black tracking-[-0.02em] uppercase leading-[0.9] font-sans;
+}
+
+.page-subheading {
+  @apply text-2xl sm:text-4xl font-black tracking-tighter uppercase text-primary leading-none font-sans;
+}
+
+.custom-cursor {
+  @apply fixed top-0 left-0 w-8 h-8 pointer-events-none z-[9999] rounded-full border-2 border-primary/30 mix-blend-difference hidden lg:block;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1), height 0.3s cubic-bezier(0.23, 1, 0.32, 1), background 0.3s, border-color 0.3s;
+}
+
+.custom-cursor.hovering {
+  @apply w-20 h-20 bg-primary/20 border-primary scale-125;
+}
+
+.custom-cursor-dot {
+  @apply fixed top-0 left-0 w-1.5 h-1.5 bg-primary pointer-events-none z-[10000] rounded-full hidden lg:block;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out;
+}
+
+.custom-cursor-glow {
+  @apply fixed top-0 left-0 w-24 h-24 bg-primary/10 pointer-events-none z-[9998] rounded-full blur-2xl hidden lg:block;
+  transform: translate(-50%, -50%);
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom noise overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
